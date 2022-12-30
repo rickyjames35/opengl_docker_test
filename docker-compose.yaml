@@ -11,6 +11,5 @@ services:
       - DISPLAY # Needed to share GPU
       - NVIDIA_DRIVER_CAPABILITIES=all # Needed to share GPU
       - NVIDIA_VISIBLE_DEVICES=all # Needed to share GPU
-    tty: true # Keeps the container running
     network_mode: "host" #  Needed to share GPU
     command: sh -c "nvidia-smi && lspci | grep ' VGA ' && glxgears"
