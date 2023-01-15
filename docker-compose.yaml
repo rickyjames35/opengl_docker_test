@@ -3,7 +3,6 @@ services:
   opengl-docker-test-build:
     image: opengl-docker-test
     container_name: opengl-docker-test
-    runtime: nvidia # Needed to share GPU
     build:
       context: . # Everything the Dockerfile has access to shall be under the current working directory of the Dockerfile
       dockerfile: Dockerfile # When you bring the docker container up it will be based off of the local Dockerfile
@@ -13,5 +12,10 @@ services:
       - NVIDIA_VISIBLE_DEVICES=all # Needed to share GPU
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix #  Needed to share GPU
-    # tty: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia #  Needed to share GPU
+              capabilities: [gpu]
     command: sh -c "nvidia-smi && lspci | grep ' VGA ' && glxgears"
