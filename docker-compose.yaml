@@ -11,5 +11,7 @@ services:
       - DISPLAY # Needed to share GPU
       - NVIDIA_DRIVER_CAPABILITIES=all # Needed to share GPU
       - NVIDIA_VISIBLE_DEVICES=all # Needed to share GPU
-    network_mode: "host" #  Needed to share GPU
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix #  Needed to share GPU
+    # tty: true
     command: sh -c "nvidia-smi && lspci | grep ' VGA ' && glxgears"
